@@ -21,8 +21,8 @@
 			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 		<property name="jdbcUrl" 
 			value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"></property>
-		<property name="username" value="book_ex"></property>
-		<property name="password" value="book_ex"></property>
+		<property name="username" value="performance"></property>
+		<property name="password" value="1234"></property>
 	</bean>
 	
 	<!-- HikariDataSource가 Connection Pool 생성하는 기능을 담당 -->
