@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.mapper.PerformanceMapper">
+
 <select id="selectByImgKey" resultType="com.project.domain.PerformanceVO">
     SELECT 
         pno,
@@ -27,5 +28,37 @@
     #{category}, #{image}, #{eventName}, #{period}, #{place}, #{userTrgt}, #{paid}, #{fee}, #{homePage}, #{imgKey}
   )
 </insert>
+
+
+<select id="getList" resultType="com.project.domain.PerformanceVO">
+	select * from performance where pno > 0
+</select>
+
+<select id="getListWithPaging" 
+				resultType="com.project.domain.PerformanceVO">
+  <![CDATA[
+    SELECT pno, category, image, eventname, period, place,
+           target_audience, is_free, fee, homepage, img_key
+    FROM (
+      SELECT ROWNUM rn, p.*
+      FROM (
+        SELECT pno, category, image, eventname, period, place,
+               target_audience, is_free, fee, homepage, img_key
+        FROM performance
+        ORDER BY pno DESC
+      ) p
+      WHERE ROWNUM <= #{pageNum} * #{amount}
+    )
+    WHERE rn > (#{pageNum} - 1) * #{amount}
+  ]]>
+</select>
+
+  
+<select id="getTotalCount" resultType="int">
+	select count(*) from performance
+	where pno > 0
+	
+</select>
+
 
 </mapper>
