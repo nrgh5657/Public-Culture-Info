@@ -50,7 +50,7 @@
 		<tbody>
 		  <c:forEach var="performance" items="${performanceList}" varStatus="status">
 			  <tr>
-			    <td>${status.index + 1}</td>
+			    <td>${performance.pno}</td>
 			    <td><img src="<c:out value='${performance.image}' />" alt="포스터" width="80"></td>
 			    <td><c:out value="${performance.category}" /></td>
 			    <td>
@@ -67,19 +67,32 @@
 
 <!-- 페이징 영역 -->
 <div class="krds-pagination">
-  <a class="page-navi prev" href="?pageNum=3">이전</a>
+
+  <!-- 이전 버튼 -->
+  <c:if test="${pageMaker.prev}">
+    <a class="page-navi prev" href="?pageNum=${pageMaker.startPage - 1}">이전</a>
+  </c:if>
+
+  <!-- 페이지 번호 -->
   <div class="page-links">
-    <a class="page-link" href="?pageNum=1">1</a>
-    <a class="page-link" href="?pageNum=2">2</a>
-    <a class="page-link active" href="?pageNum=3"><span class="sr-only">현재페이지 </span>3</a>
-    <a class="page-link" href="?pageNum=4">4</a>
-    <a class="page-link" href="?pageNum=5">5</a>
-    <a class="page-link" href="?pageNum=6">6</a>
-    <a class="page-link" href="?pageNum=7">7</a>
-    <a class="page-link" href="?pageNum=8">8</a>
-    <a class="page-link" href="?pageNum=9">9</a>
-    <a class="page-link" href="?pageNum=10">10</a>
+    <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+      <a class="page-link ${pageMaker.cri.pageNum == num ? 'active' : ''}"
+         href="?pageNum=${num}">
+        <c:if test="${pageMaker.cri.pageNum == num}">
+          <span class="sr-only">현재페이지 </span>
+        </c:if>
+        ${num}
+      </a>
+    </c:forEach>
   </div>
-  <a class="page-navi next" href="?pageNum=4">다음</a>
+
+  <!-- 다음 버튼 -->
+  <c:if test="${pageMaker.next}">
+    <a class="page-navi next" href="?pageNum=${pageMaker.endPage + 1}">다음</a>
+  </c:if>
+
 </div>
 <!-- //페이징 영역-->
+
+
+<%@ include file="../includes/footer.jsp" %>

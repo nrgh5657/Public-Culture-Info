@@ -1,5 +1,7 @@
 package com.project.service;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -11,17 +13,19 @@ import com.project.mapper.PerformanceMapper;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.domain.Criteria;
 import com.project.domain.PerformanceVO;
 import com.project.mapper.PerformanceMapper;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
+
 @Service
-
-
 @RequiredArgsConstructor
+@Log4j
 public class PerformanceServiceImpl implements PerformanceService{
 
-	private final PerformanceMapper performanceMapper;
+	private final PerformanceMapper mapper;
 	
 	@Override
 	public List<PerformanceVO> fetchPerformances() {
@@ -89,24 +93,38 @@ public class PerformanceServiceImpl implements PerformanceService{
 
 	@Override
 	public PerformanceVO findByImgKey(String imgKey) {
-		return performanceMapper.selectByImgKey(imgKey);
+		return mapper.selectByImgKey(imgKey);
 	}
 
 	@Override
 	public PerformanceVO getOrSavePerformance(String imgKey) {
-		PerformanceVO vo = performanceMapper.selectByImgKey(imgKey);
+		PerformanceVO vo = mapper.selectByImgKey(imgKey);
         if (vo == null) {
             List<PerformanceVO> apiList = fetchPerformances();
             for (PerformanceVO p : apiList) {
                 if (imgKey.equals(p.getImgKey())) {
-                    performanceMapper.insert(p);
+                    mapper.insert(p);
                     break;
                 }
             }
-            vo = performanceMapper.selectByImgKey(imgKey);
+            vo = mapper.selectByImgKey(imgKey);
         }
 		return vo;
 	}
+
+	@Override
+	public List<PerformanceVO> getList(Criteria cri) {
+		log.info("getList.........");
+		return mapper.getListWithPaging(cri);
+	}
+
+	@Override
+	public int getTotal(Criteria cri) {
+		log.info("getTotal...........");
+		return mapper.getTotalCount(cri);
+	}
+
+
 	
 	
 

@@ -1,5 +1,7 @@
 package com.project.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +11,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.domain.Criteria;
+import com.project.domain.PageDTO;
 import com.project.domain.PerformanceVO;
 import com.project.service.PerformanceService;
+
+import lombok.extern.log4j.Log4j;
 
 
 @Controller
 @RequestMapping("/performance")
+@Log4j
 public class PerformanceController {
 	
 	 private final PerformanceService performanceService;
@@ -23,15 +30,26 @@ public class PerformanceController {
 	    public PerformanceController(PerformanceService performanceService) {
 	        this.performanceService = performanceService;
 	    }
+	    
+	    
 
 	    @GetMapping("/performanceList")
-	    public String showList(Model model) {
+	    public String showList(Criteria cri, Model model) {
+
 	    	System.out.println(">>>>> /performance/performanceList 요청 들어옴");
 	    	
-	        List<PerformanceVO> list = performanceService.fetchPerformances();
+	    	// 1. 페이징 된 목록 불러오기
+	        List<PerformanceVO> list = performanceService.getList(cri);
 	        list.forEach(vo -> vo.setImgKey(performanceService.extractImgKey(vo.getImage())));
-	        System.out.println("🎯 Controller에서 받은 list 크기: " + list.size());
-	        model.addAttribute("performanceList", list);
+	        ;
+	        
+	        // 2. 전체 데이터 수
+	        int total = performanceService.getTotal(cri);
+	        
+	        // 3. 모델에 데이터 담기
+	        model.addAttribute("performanceList", list); // 현재 페이지 공연 목록
+	        model.addAttribute("pageMaker", new PageDTO(cri, total)); // 페이징 정보
+	        
 	        return "performance/performanceList";
 	    }
 	    
@@ -52,5 +70,8 @@ public class PerformanceController {
 	        model.addAttribute("performance", performance);
 	        return "performance/performanceGet"; 
 	    }
+	    
+	    
+	    
 
 }
