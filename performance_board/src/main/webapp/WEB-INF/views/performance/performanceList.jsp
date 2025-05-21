@@ -53,7 +53,10 @@
 			    <td>${status.index + 1}</td>
 			    <td><img src="<c:out value='${performance.image}' />" alt="포스터" width="80"></td>
 			    <td><c:out value="${performance.category}" /></td>
-			    <td><c:out value="${performance.eventName}" /></td>
+			    <td>
+			    <a href="${pageContext.request.contextPath}/performance/performanceGet?imgKey=${performance.imgKey}">
+    			<c:out value="${performance.eventName}" />
+				</a></td>
 			    <td><c:out value="${performance.place}" /></td>
 			    <td><c:out value="${performance.period}" /></td>
 			  </tr>

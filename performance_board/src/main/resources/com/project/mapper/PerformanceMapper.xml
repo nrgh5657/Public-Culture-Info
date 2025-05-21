@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.PerformanceMapper">
+<select id="selectByImgKey" resultType="com.project.domain.PerformanceVO">
+    SELECT 
+        pno,
+        category,
+        image,
+        eventname AS eventName,
+        period,
+        place,
+        target_audience AS userTrgt,
+        is_free AS paid,
+        fee,
+        homepage AS homePage,
+        img_key AS imgKey
+    FROM performance
+    WHERE img_key=#{imgKey}
+</select>
+
+<insert id="insert" parameterType="com.project.domain.PerformanceVO">
+  INSERT INTO performance (
+    category, image, eventname, period, place, target_audience, is_free, fee, homepage, img_key
+  ) VALUES (
+    #{category}, #{image}, #{eventName}, #{period}, #{place}, #{userTrgt}, #{paid}, #{fee}, #{homePage}, #{imgKey}
+  )
+</insert>
+
+</mapper>

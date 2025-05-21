@@ -13,12 +13,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PerformanceVO {
-	private int bno;
+	private int pno;
 	private String image;
 	private String category;
 	private String eventName;
     private String place;
     private String paid;
+    private String fee;
     private String period;
-
+    private String userTrgt;
+    private String homePage;
+    private String imgKey;
 }
