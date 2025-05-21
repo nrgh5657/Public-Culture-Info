@@ -72,7 +72,7 @@
                                     </tbody>
                                 </table>
                                 <div class="btn-wrap">
-                                    <button class="back-button" onclick="history.back();">목록</button>
+                                    <button class="btn btn-default" onclick="history.back();">목록</button>
                                 </div>
                             </div>
                         </div> <!-- performanceDetail-header -->
@@ -83,3 +83,4 @@
     </section>
 </body>
 </html>
+<%@ include file="../includes/footer.jsp" %>
