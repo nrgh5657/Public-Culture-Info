@@ -34,6 +34,8 @@
 	select * from performance where pno > 0
 </select>
 
+
+<!--날자순 정렬, 중복시, pno로 비교-->
 <select id="getListWithPaging" 
 				resultType="com.project.domain.PerformanceVO">
   <![CDATA[
@@ -45,7 +47,7 @@
         SELECT pno, category, image, eventname, period, place,
                target_audience, is_free, fee, homepage, img_key
         FROM performance
-        ORDER BY pno DESC
+        ORDER BY TO_DATE(SUBSTR(period, 1, 10), 'YYYY-MM-DD') DESC, pno DESC 
       ) p
       WHERE ROWNUM <= #{pageNum} * #{amount}
     )
