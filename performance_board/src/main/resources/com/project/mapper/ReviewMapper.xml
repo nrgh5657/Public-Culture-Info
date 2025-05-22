@@ -5,11 +5,41 @@
 <mapper namespace="com.project.mapper.ReviewMapper">
   
   <select id="read" resultType="com.project.domain.ReviewVO">
-  	select * from tbl_performance where bno = #{bno}
+  	select bno, img_url as img, title, writer, readcount, regdate, updatedate, content
+  	from tbl_performance
+  	where bno = #{bno}
   </select>
   
-  <select id="getList" resultType="com.project.domain.ReviewVO">
-  	select * from tbl_performace where bno > 0
-  </select>
+  <insert id="insertSelectKey">
+  	<selectKey keyProperty="bno" order="BEFORE" resultType="Long">
+  		select seq_performance.nextval from dual
+  	</selectKey>
+  
+  	insert into tbl_performance(bno, img_url, title, writer, content)
+  	values(#{bno}, #{img}, #{title}, #{writer}, #{content})
+  </insert>
+  
+  <delete id="delete">
+  	delete from tbl_performance where bno = #{bno}
+  </delete>
+  
+  <update id="update">
+  	update tbl_performance
+  	set img_url = #{img},
+  		title = #{title},
+  		content = #{content},
+  		updatedate = sysdate
+  	where bno = #{bno}
+  </update>
+  
+  <update id="updateReadCount">
+  	update tbl_performance
+  	set readcount = readcount + 1
+  	where bno = #{bno}
+  </update>
+  
+  <update id="updateReplyCnt">
+  	update tbl_performance set replyCnt = replyCnt + #{amount} where bno = #{bno}
+  </update>
   
 </mapper>

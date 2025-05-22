@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.project.domain.ReviewVO;
+
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,7 +25,19 @@ public class ReviewServiceImplTests {
 	
 	@Test
 	public void testGet() {
+		service.get(1L);
+	}
+	
+	@Test
+	public void testRegister() {
+		ReviewVO vo = ReviewVO.builder()
+				.img("no image")
+				.title("Test 공연/행사명2")
+				.writer("Test writer2")
+				.content("Test 내용2")
+				.build();
 		
+		service.register(vo);
 	}
 
 }

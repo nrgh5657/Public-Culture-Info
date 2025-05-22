@@ -54,6 +54,7 @@
   </trim>
 </sql>
 
+<!--날자순 정렬, 중복시, pno로 비교-->
 <select id="getListWithPaging" 
 				resultType="com.project.domain.PerformanceVO">
   <![CDATA[
@@ -73,7 +74,7 @@
   </where>
   
   <![CDATA[
-        ORDER BY pno DESC
+        ORDER BY TO_DATE(SUBSTR(period, 1, 10), 'YYYY-MM-DD') DESC, pno DESC
       ) p
       WHERE ROWNUM <= #{pageNum} * #{amount}
     )
