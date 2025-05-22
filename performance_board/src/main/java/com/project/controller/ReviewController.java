@@ -16,4 +16,9 @@ public class ReviewController {
 	@GetMapping("/reviewGet")
 	public void getReview() {
 	}
+	
+	@GetMapping("/reviewList")
+	public void reviewList() {
+		
+	}
 }

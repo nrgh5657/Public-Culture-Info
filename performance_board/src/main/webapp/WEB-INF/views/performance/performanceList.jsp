@@ -2,6 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!-- 탭 활성화 -->
+<%
+    request.setAttribute("tab", "performance");
+%>
 <%@ include file="../includes/header.jsp" %>  
 
 <!-- 검색창 -->
@@ -62,7 +66,7 @@
 		<tbody>
 		  <c:forEach var="performance" items="${performanceList}" varStatus="status">
 			  <tr>
-			    <td>${performance.pno}</td>
+			    <td>${(pageMaker.cri.pageNum - 1) * pageMaker.cri.amount + status.index + 1}</td>
 			    <td><img src="<c:out value='${performance.image}' />" alt="포스터" width="80"></td>
 			    <td><c:out value="${performance.category}" /></td>
 			    <td>

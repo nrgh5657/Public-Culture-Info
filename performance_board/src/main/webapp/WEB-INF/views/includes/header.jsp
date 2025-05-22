@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,22 +53,33 @@
 			</div>
 		</div>
 		<!-- //헤더 상단 기타메뉴 -->
+		<%
+    	String tab = (String) request.getAttribute("tab");
+    	if (tab == null) tab = "performance"; // 기본 탭 지정
+		%>
 		
 		<div class="krds-tab-area layer">
-			<!-- tab list -->
-			<div class="tab line full">
-				<ul role="tablist">
-					<li id="tab_login_01" role="tab" aria-selected="true" aria-controls="panel_login_01" class="active">
-						<button type="button" class="btn-tab">공연/행사 정보<i class="sr-only created"> 선택됨</i></button>
-					</li>
-					<li id="tab_login_02" role="tab" aria-selected="false" aria-controls="panel_login_02">
-						<button type="button" class="btn-tab">관람평</button>
-					</li>
-				</ul>
-			</div>
-			<!-- //tab list -->
+			  <div class="tab line full">
+			    <nav class="krds-main-menu">
+			      <div class="inner">
+			        <ul class="gnb-menu">
+			          <li>					<!-- 호출할 탭 경로 -->
+			            <a href="${pageContext.request.contextPath}/performance/performanceList" class="gnb-main-trigger is-link <%= tab.equals("performance") ? "active" : "" %>" data-trigger="gnb">
+			              공연/행사 정보 <i class="svg-icon ico-toggle"></i>
+			            </a>
+			          </li>
+			          <li>					<!-- 호출할 탭 경로 -->
+			            <a href="${pageContext.request.contextPath}/review/reviewList" class="gnb-main-trigger is-link <%= tab.equals("review") ? "active" : "" %>" data-trigger="gnb">
+			              관람평 <i class="svg-icon ico-toggle"></i>
+			            </a>
+			          </li>
+			        </ul>
+			      </div>
+			    </nav>
+			  </div>
 		</div>
-		<!-- //tab -->
-	</div>
+		
+		
+		
 </header>
 <!-- //header -->
