@@ -2,6 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!-- 탭 활성화 -->
+<%
+    request.setAttribute("tab", "review");
+%>
 <%@ include file="../includes/header.jsp" %>  
 
 <!-- 검색창 -->
