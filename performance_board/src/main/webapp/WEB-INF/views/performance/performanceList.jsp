@@ -9,18 +9,27 @@
 <%@ include file="../includes/header.jsp" %>  
 
 <!-- 검색창 -->
-<div class="search-container">
+<form action="/performance/performanceList" method="get" div class="search-container">
   <div class="search-top-box">
     <div class="sch-form-wrap flex-inline">
       <div class="input-group">
-        <select class="krds-form-select" title="카테고리 선택">
-          <option value="">전체</option>
-          <option value="공연">공연</option>
-          <option value="전시">전시</option>
+      
+      <!-- 검색 조건 type -->
+        <select class="krds-form-select" name="type" title="검색 조건 선택">
+          <option value="" <c:if test="${pageMaker.cri.type == null}">selected</c:if>>--</option>
+          <option value="T" <c:if test="${pageMaker.cri.type == 'T'}">selected</c:if>>제목</option>
+          <option value="P" <c:if test="${pageMaker.cri.type == 'P'}">selected</c:if>>장소</option>
+          <option value="C" <c:if test="${pageMaker.cri.type == 'C'}">selected</c:if>>카테고리</option>
+          <option value="TPC" <c:if test="${pageMaker.cri.type == 'TPC'}">selected</c:if>>전체</option>
         </select>
+        
+        <!-- 검색어 키워드 -->
         <div class="sch-input">
-          <input type="text" class="krds-input" placeholder="검색어를 입력해주세요" title="검색어 입력">
-          <button type="button" class="krds-btn icon">
+          <input type="text" class="krds-input" name="keyword"
+          		placeholder="검색어를 입력해주세요"
+          		value="<c:out value='${pageMaker.cri.keyword}' />"
+          		title="검색어 입력" />
+          <button type="submit" class="krds-btn icon">
             <span class="sr-only">검색</span>
             <i class="svg-icon ico-sch"></i>
           </button>
@@ -28,7 +37,10 @@
       </div>
     </div>
   </div>
-</div>
+  
+  <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}" />
+  <input type="hidden" name="amount" value="${pageMaker.cri.amount}" />
+</form>
 <!-- //검색창 -->
 
 <div class="krds-table-wrap" style="max-width: 1200px; margin: 50px auto 0 auto;">

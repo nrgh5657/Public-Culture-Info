@@ -35,7 +35,7 @@ public class PerformanceController {
 
 	    @GetMapping("/performanceList")
 	    public String showList(Criteria cri, Model model) {
-
+	    	
 	    	System.out.println(">>>>> /performance/performanceList 요청 들어옴");
 	    	
 	    	// 1. 페이징 된 목록 불러오기
@@ -48,7 +48,7 @@ public class PerformanceController {
 	        
 	        // 3. 모델에 데이터 담기
 	        model.addAttribute("performanceList", list); // 현재 페이지 공연 목록
-	        model.addAttribute("pageMaker", new PageDTO(cri, total)); // 페이징 정보
+	        model.addAttribute("pageMaker", new PageDTO(cri, performanceService.getTotal(cri))); // 페이징 정보
 	        
 	        return "performance/performanceList";
 	    }
