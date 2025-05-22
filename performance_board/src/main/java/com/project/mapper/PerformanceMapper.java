@@ -1,6 +1,7 @@
 package com.project.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -19,5 +20,7 @@ public interface PerformanceMapper {
 	public List<PerformanceVO> getListWithPaging(Criteria cri);
 
 	public int getTotalCount(Criteria cri);
+	
+	public List<PerformanceVO> searchTest(Map<String, Map<String, String>> map);
 	
 }

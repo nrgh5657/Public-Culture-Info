@@ -2,7 +2,9 @@ package com.project.mapper;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,5 +31,26 @@ public class PerformanceMapperTests {
 				mapper.getListWithPaging(new Criteria(1, 10));
 		list.forEach(performance -> log.info(performance));
 	}
+	
+	@Test
+	public void testSearch() {
+		Map<String, String> map = new HashMap<String, String>();
+	    map.put("T", "앙상블");
+	    map.put("C", "클래식");
+	    map.put("P", "세종");
+
+		
+	    Map<String, Map<String, String>> outer = new HashMap<>();
+
+	    outer.put("map", map);
+	    
+	    List<PerformanceVO> list = mapper.searchTest(outer);
+	    
+	    log.info("------------------- 결과 확인 -------------------");
+	    log.info(list);
+		
+	}
+	
+	
 
 }

@@ -50,12 +50,16 @@
     </thead>
     <tbody>
       <tr>
-        <td>1</td>
-        <td>이미지url</td>
-        <td><a href="#">뮤지컬 '레미제라블' 정말 감동이었어요!</a></td>
-        <td>홍길동</td>
-        <td>2025-05-18</td>
-        <td>123</td>
+        <td><c:out value="${review.bno}" /></td>
+        <td><img src="${review.imgUrl}" alt="포스터" width="80"></td>
+        <td>
+	        <a href="${pageContext.request.contextPath}/review/reviewDetail?bno=${review.bno}">
+	          <c:out value="${review.title}" />
+	        </a>
+      	</td>
+        <td><c:out value="${review.writer}" /></td>
+        <td><fmt:formatDate value="${review.regdate}" pattern="yyyy-MM-dd" /></td>
+        <td><c:out value="${review.readcount}" /></td>
       </tr>
     </tbody>
   </table>

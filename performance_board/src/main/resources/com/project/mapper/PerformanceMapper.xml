@@ -34,6 +34,26 @@
 	select * from performance where pno > 0
 </select>
 
+<sql id="criteria">
+  <trim prefix="(" suffix=")" suffixOverrides="or">
+    <foreach collection="typeArr" item="type" separator="or">
+    
+      <if test="type == 'T'.toString()">
+        eventName like '%' || #{keyword} || '%'
+      </if>
+      
+      <if test="type == 'P'.toString()">
+        place like '%' || #{keyword} || '%'
+      </if>
+      
+      <if test="type == 'C'.toString()">
+        category like '%' || #{keyword} || '%'
+      </if>
+      
+    </foreach>
+  </trim>
+</sql>
+
 <select id="getListWithPaging" 
 				resultType="com.project.domain.PerformanceVO">
   <![CDATA[
@@ -45,6 +65,14 @@
         SELECT pno, category, image, eventname, period, place,
                target_audience, is_free, fee, homepage, img_key
         FROM performance
+  ]]>
+  
+  <!-- 검색 조건 포함 -->
+  <where>
+    <include refid="criteria"/>
+  </where>
+  
+  <![CDATA[
         ORDER BY pno DESC
       ) p
       WHERE ROWNUM <= #{pageNum} * #{amount}
@@ -55,9 +83,37 @@
 
   
 <select id="getTotalCount" resultType="int">
-	select count(*) from performance
-	where pno > 0
-	
+  SELECT count(*) FROM performance
+ <where>
+    <include refid="criteria"/>
+   AND pno > 0
+  </where>
+</select>
+
+<select id="searchTest" resultType="com.project.domain.PerformanceVO">
+  <![CDATA[
+    SELECT * FROM performance
+    WHERE
+  ]]>
+  
+  <trim suffix="and"> 
+	  	<foreach collection="map" index="key" item="val" 
+	  			separator="or" open="(" close=")">
+      <if test="key=='T'.toString()">
+        eventname like #{val}
+      </if>
+      <if test="key == 'P'.toString()">
+        place like #{val}
+      </if>
+      <if test="key == 'C'.toString()">
+        category like #{val}
+      </if>
+    </foreach>
+  </trim>
+
+  <![CDATA[
+  		rownum < 10
+  ]]>
 </select>
 
 
