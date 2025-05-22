@@ -20,5 +20,29 @@ public class ReviewServiceImpl implements ReviewService{
 		log.info("get..." + bno);
 		return mapper.read(bno);
 	}
+
+	@Override
+	public void register(ReviewVO vo) {
+		log.info("register..." + vo);
+		mapper.insertSelectKey(vo);
+	}
+
+	@Override
+	public boolean modifiy(ReviewVO vo) {
+		log.info("modify...");
+		return mapper.update(vo) == 1;
+	}
+
+	@Override
+	public boolean remove(Long bno) {
+		log.info("remove...");
+		return mapper.delete(bno) == 1;
+	}
+
+	@Override
+	public void updateReadCount(Long bno) {
+		log.info("updateReadCount...");
+		mapper.updateReadCount(bno);	
+	}
 	
 }
