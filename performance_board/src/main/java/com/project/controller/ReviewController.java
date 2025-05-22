@@ -30,6 +30,7 @@ public class ReviewController {
 		return "redirect:/review/reviewList";
 	}
 	
+<<<<<<< HEAD
 	@GetMapping("/reviewGet")
 	public void getReview(@RequestParam Long bno, Model model) {
 		log.info("get...");
@@ -55,4 +56,10 @@ public class ReviewController {
 		return "redirect:/review/reviewList";
 	}
 	
+=======
+	@GetMapping("/reviewList")
+	public void reviewList() {
+		
+	}
+>>>>>>> main
 }
