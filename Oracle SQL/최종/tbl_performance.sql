@@ -27,8 +27,15 @@ values(seq_performance.nextval,
 
 commit;
 
-select * from tbl_performance;
+select * from tbl_performance order by BNO;
 
+-- replyCnt 추가
+alter table tbl_performance
+add (replyCnt number default 0);
+
+-- 장소, 분류 추가
+alter table tbl_performance
+add (img_key VARCHAR2(255), place VARCHAR2(300), category VARCHAR2(100));
 
 
 
