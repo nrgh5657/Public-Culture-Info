@@ -4,10 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.project.domain.Criteria;
 import com.project.domain.ReviewVO;
 
 public interface ReviewMapper {
-	
+
 	//단건 조회
 	public ReviewVO read(Long bno);
 	

@@ -25,7 +25,7 @@
                 </div>
             </div>
             <table class="info-table">
-            	<input type="hidden" value='<c:out value="${performance.bno}" />'>
+            	<input type="hidden" name="bno" value='<c:out value="${performance.bno}" />'>
                 <tr>
                     <th>공연/행사명</th>
                     <td colspan="3">
@@ -69,18 +69,24 @@
                 </tr>
             </table>
         </div>
+        <!-- end reivewDetail-header -->
+        
         <div class="button-wrap">
-        <div class="button">
-            <button type="submit" data-oper="modify" class="btn btn-info">Modify</button>
-            <button type="submit" data-oper="remove" class="btn btn-danger">Remove</button>
-            <button type="submit" data-oper="list" class="btn btn-default">List</button>
+	        <div class="button">
+	            <button type="submit" data-oper="modify" class="btn btn-info">Modify</button>
+	            <button type="submit" data-oper="remove" class="btn btn-danger">Remove</button>
+	            <button type="submit" data-oper="list" class="btn btn-default">List</button>
+	        </div>
         </div>
-        </div>
-        <!-- end button -->
-    </div>
-    <!-- end reivewDetail-header -->
-</div>
-<!-- end contents -->
+        <!-- end button-wrap -->
+        
+        <form id="openForm" action="/review/reviewModify" method="get">
+      		<input type="hidden" id="bno" name="bno" value="<c:out value='${performance.bno}'/>">
+      		<input type="hidden" name="pageNum" value="${cri.pageNum}">
+      		<input type="hidden" name="amount" value="${cri.amount}">
+      	</form>
+	</div>
+	<!-- end contents -->
     
     <!-- .row 댓글 처리 -->
     <div class="reply-section">
@@ -346,6 +352,21 @@
 		
 		}); //end replyPageFooter
 		
+	});
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		let operForm = $("#openForm");
+		
+		$("button[data-oper='modify']").on("click", function(e){
+			operForm.attr("action", "/review/reviewModify").submit();
+		});
+		
+		$("button[data-oper='list']").on("click", function(e){
+			operForm.find("#bno").remove();
+			operForm.attr("action", "/review/reviewList").submit();
+		});
 	});
 </script>
 
