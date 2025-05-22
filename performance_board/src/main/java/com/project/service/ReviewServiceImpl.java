@@ -1,7 +1,10 @@
 package com.project.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.project.domain.Criteria;
 import com.project.domain.ReviewVO;
 import com.project.mapper.ReviewMapper;
 
@@ -22,9 +25,8 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public void register(ReviewVO vo) {
-		log.info("register..." + vo);
-		mapper.insertSelectKey(vo);
+	public void register(ReviewVO review) {
+		mapper.insertReview(review);
 	}
 
 	@Override
@@ -43,6 +45,24 @@ public class ReviewServiceImpl implements ReviewService{
 	public void updateReadCount(Long bno) {
 		log.info("updateReadCount...");
 		mapper.updateReadCount(bno);	
+	}
+	
+	@Override
+	public List<ReviewVO> getList() {
+		log.info("getList.....");
+		return mapper.getList();
+	}
+
+	@Override
+	public List<ReviewVO> getList(Criteria cri) {
+		
+		return mapper.getListWithPaging(cri);
+	}
+
+	@Override
+	public int getTotal(Criteria cri) {
+
+		return mapper.getTotalCount(cri);
 	}
 	
 }

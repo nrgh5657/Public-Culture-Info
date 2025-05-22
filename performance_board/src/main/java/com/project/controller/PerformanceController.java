@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,8 +31,7 @@ public class PerformanceController {
 	    public PerformanceController(PerformanceService performanceService) {
 	        this.performanceService = performanceService;
 	    }
-	    
-	    
+
 
 	    @GetMapping("/performanceList")
 	    public String showList(Criteria cri, Model model) {
@@ -50,6 +50,7 @@ public class PerformanceController {
 	        model.addAttribute("performanceList", list); // 현재 페이지 공연 목록
 	        model.addAttribute("pageMaker", new PageDTO(cri, performanceService.getTotal(cri))); // 페이징 정보
 	        
+	        model.addAttribute("cri", cri);
 	        return "performance/performanceList";
 	    }
 	    
@@ -63,11 +64,13 @@ public class PerformanceController {
 	    }*/
 	    
 	    @GetMapping("/performanceGet")
-	    public String getPerformanceDetail(String imgKey, Model model) {
+	    public String getPerformanceDetail(@RequestParam String imgKey, @ModelAttribute("cri") Criteria cri, Model model) {
 	        System.out.println("imgKey: " + imgKey);
 	        PerformanceVO performance = performanceService.getOrSavePerformance(imgKey);
 	        System.out.println("performance 객체: " + performance);
 	        model.addAttribute("performance", performance);
+	        model.addAttribute("cri", cri);
+	        log.info(cri);
 	        return "performance/performanceGet"; 
 	    }
 	    

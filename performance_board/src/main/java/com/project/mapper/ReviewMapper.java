@@ -12,8 +12,8 @@ public interface ReviewMapper {
 	//단건 조회
 	public ReviewVO read(Long bno);
 	
-	//데이터 저장
-	public void insertSelectKey(ReviewVO review);
+	//데이터 등록
+	public void insertReview(ReviewVO review);
 	
 	//데이터 삭제
 	public int delete(Long bno);
@@ -27,4 +27,12 @@ public interface ReviewMapper {
 	//replyCnt 값
 	public void updateReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
 	
+	// 기본 목록
+	public List<ReviewVO> getList();
+		
+	// 페이징 목록
+	public List<ReviewVO> getListWithPaging(Criteria cri);
+	
+	// 총 개수
+	public int getTotalCount(Criteria cri);
 }

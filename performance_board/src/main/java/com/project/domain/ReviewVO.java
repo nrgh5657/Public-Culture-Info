@@ -35,4 +35,7 @@ public class ReviewVO {
 	private Date regDate;
 	private Date updateDate;
 	private String content;
+	private String place;      // 공연 장소
+    private String category;
+    private String imgKey;
 }

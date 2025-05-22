@@ -42,4 +42,72 @@
   	update tbl_performance set replyCnt = replyCnt + #{amount} where bno = #{bno}
   </update>
   
+  <insert id="insertReview" parameterType="com.project.domain.ReviewVO">
+    INSERT INTO tbl_performance (
+        BNO, IMG_URL, TITLE, WRITER, CONTENT, PLACE, CATEGORY, IMG_KEY
+    ) VALUES (
+        seq_performance.nextval, #{img}, #{title}, #{writer}, #{content}, #{place}, #{category}, #{imgKey}
+    )
+</insert>
+  
+  <select id="getList" resultType="com.project.domain.ReviewVO">
+  SELECT 
+    bno, 
+    img_url AS img, 
+    title, 
+    writer, 
+    readcount AS readCount, 
+    regdate AS regDate, 
+    updatedate AS updateDate, 
+    content
+  FROM tbl_performance
+  ORDER BY bno DESC
+</select>
+
+<!-- 검색 조건 -->
+<sql id="criteria">
+  	<trim prefix="(" suffix=") and"> 
+  		<foreach collection="typeArr"  item="type" 
+  			separator="or">
+  		<if test="type == 'T'.toString()">
+  			title like  '%' || #{keyword} || '%'
+  		</if> 
+  		
+  		<if test="type=='C'.toString()">
+  			content like '%' || #{keyword} || '%'
+  		</if> 
+
+  		<if test="type=='W'.toString()">
+  			writer like '%' || #{keyword} || '%'
+  		</if> 
+	  	</foreach>
+    </trim>
+  </sql>
+  
+  <select id="getListWithPaging" resultType="com.project.domain.ReviewVO">
+   <![CDATA[
+      SELECT bno, img_url AS img, title, writer, readcount AS readCount, regdate, updatedate, content
+      FROM (
+        SELECT /*+ INDEX_DESC(tbl_performance pk_performance) */
+        ROWNUM rn, bno, img_url, title, writer, readcount, regdate, updatedate, content
+  		from tbl_performance
+  		where
+  	]]>
+  	 <include refid="criteria"></include>	
+  	<![CDATA[	
+	  		rownum <= #{pageNum} * #{amount}
+	  	)	
+	  	where rn > ( #{pageNum} - 1 ) * #{amount}
+	]]>		
+  </select>
+  
+  <select id="getTotalCount" resultType="int">
+  	select count(*) from tbl_performance
+  	where
+  	<include refid="criteria"></include>	
+  	
+  	bno > 0
+  	
+  </select>
+  
 </mapper>

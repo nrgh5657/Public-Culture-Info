@@ -53,18 +53,20 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><c:out value="${review.bno}" /></td>
-        <td><img src="${review.imgUrl}" alt="포스터" width="80"></td>
-        <td>
-	        <a href="${pageContext.request.contextPath}/review/reviewDetail?bno=${review.bno}">
-	          <c:out value="${review.title}" />
-	        </a>
-      	</td>
-        <td><c:out value="${review.writer}" /></td>
-        <td><fmt:formatDate value="${review.regdate}" pattern="yyyy-MM-dd" /></td>
-        <td><c:out value="${review.readcount}" /></td>
-      </tr>
+     <c:forEach var="review" items="${list}">
+	      <tr>
+	        <td><c:out value="${review.bno}" /></td>
+	        <td><img src="${review.img}" alt="포스터" width="80"></td>
+	        <td>
+		        <a href="${pageContext.request.contextPath}/review/reviewGet?bno=${review.bno}">
+		          <c:out value="${review.title}" />
+		        </a>
+	      	</td>
+	        <td><c:out value="${review.writer}" /></td>
+	        <td><fmt:formatDate value="${review.regDate}" pattern="yyyy-MM-dd" /></td>
+	        <td><c:out value="${review.readCount}" /></td>
+	      </tr>
+      </c:forEach>
     </tbody>
   </table>
 </div>
@@ -72,21 +74,28 @@
 
 <!-- 페이징 영역 -->
 <div class="krds-pagination">
-  <a class="page-navi prev" href="?pageNum=3">이전</a>
+	<c:if test="${pageMaker.prev}">
+    	<a class="page-navi prev" href="?pageNum=${pageMaker.startPage - 1}">이전</a>
+  	</c:if>
+
   <div class="page-links">
-    <a class="page-link" href="?pageNum=1">1</a>
-    <a class="page-link" href="?pageNum=2">2</a>
-    <a class="page-link active" href="?pageNum=3"><span class="sr-only">현재페이지 </span>3</a>
-    <a class="page-link" href="?pageNum=4">4</a>
-    <a class="page-link" href="?pageNum=5">5</a>
-    <a class="page-link" href="?pageNum=6">6</a>
-    <a class="page-link" href="?pageNum=7">7</a>
-    <a class="page-link" href="?pageNum=8">8</a>
-    <a class="page-link" href="?pageNum=9">9</a>
-    <a class="page-link" href="?pageNum=10">10</a>
+    <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+      <c:choose>
+        <c:when test="${pageMaker.cri.pageNum == num}">
+          <a class="page-link active" href="?pageNum=${num}">
+            <span class="sr-only">현재페이지 </span>${num}
+          </a>
+        </c:when>
+        <c:otherwise>
+          <a class="page-link" href="?pageNum=${num}">${num}</a>
+        </c:otherwise>
+      </c:choose>
+    </c:forEach>
   </div>
-  <a class="page-navi next" href="?pageNum=4">다음</a>
+  
+  <c:if test="${pageMaker.next}">
+    <a class="page-navi next" href="?pageNum=${pageMaker.endPage + 1}">다음</a>
+  </c:if>
 </div>
 <!-- //페이징 영역-->
-
 <%@ include file="../includes/footer.jsp" %>

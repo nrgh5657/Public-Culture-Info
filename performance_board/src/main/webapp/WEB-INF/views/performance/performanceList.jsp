@@ -70,7 +70,7 @@
 			    <td><img src="<c:out value='${performance.image}' />" alt="포스터" width="80"></td>
 			    <td><c:out value="${performance.category}" /></td>
 			    <td>
-			    <a href="${pageContext.request.contextPath}/performance/performanceGet?imgKey=${performance.imgKey}">
+			     <a href="/performance/performanceGet?imgKey=${performance.imgKey}&pageNum=${cri.pageNum}&amount=${cri.amount}">
     			<c:out value="${performance.eventName}" />
 				</a></td>
 			    <td><c:out value="${performance.place}" /></td>

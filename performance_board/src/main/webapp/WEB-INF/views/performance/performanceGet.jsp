@@ -72,7 +72,20 @@
                                     </tbody>
                                 </table>
                                 <div class="btn-wrap">
-                                    <button class="btn btn-default" onclick="history.back();">목록</button>
+                                    <c:url var="backToListUrl" value="/performance/performanceList">
+									    <c:param name="pageNum" value="${cri.pageNum}" />
+									    <c:param name="amount" value="${cri.amount}" />
+									</c:url>
+                                    <button class="btn btn-default" onclick="location.href='${backToListUrl}'">목록</button>    
+                                        <!-- 등록페이지에서 필요한 값 hidden, post방식으로 넘겨주기 -->
+                                        <form id="reviewForm" action="${pageContext.request.contextPath}/review/reviewRegister" method="post" style="display:inline;">
+								        <input type="hidden" name="imgKey" value="${performance.imgKey}" />
+								        <input type="hidden" name="title" value="${performance.eventName}" />
+								        <input type="hidden" name="img" value="${performance.image}" />
+								        <input type="hidden" name="category" value="${performance.category}" />
+   										<input type="hidden" name="place" value="${performance.place}" />
+								        <button type="submit" class="btn btn-default">리뷰 작성</button>
+								    	</form>
                                 </div>
                             </div>
                         </div> <!-- performanceDetail-header -->
