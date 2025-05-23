@@ -80,6 +80,30 @@ nav, .breadcrumb, .breadcrumb li{
     max-width: 500px;
 }
 
+.img-wrap {
+  display: flex;
+  flex-direction: column; /* 세로 방향 배치 */
+  align-items: center;    /* 가로 중앙 정렬 */
+  gap: 8px;               /* 이미지와 버튼 사이 간격 */
+}
+
+.img-wrap img {
+  max-width: 100%;
+  height: 600px;
+}
+
+.btn-select {
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.btn-select {
+  display: block;        /* 버튼을 블록으로 만들어서 줄바꿈 */
+  margin: 4px auto 0;    /* 위쪽 간격 4px, 좌우 중앙 정렬 */
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
 .imgUrl {
     max-width: 90%;
     height: auto;
@@ -205,3 +229,64 @@ nav, .breadcrumb, .breadcrumb li{
   margin-top: 40px;
   clear: both; /* 👈 위 요소가 float이면 줄바꿈 강제 */
 }
+
+
+/*모달 css*/
+.modal {
+  display: none; /* 기본은 숨김 */
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 800px;
+  position: relative;
+}
+
+.close {
+  color: #aaa;
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #000;
+}
+
+#performancePagination button {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.3s;
+}
+
+#performancePagination button:hover:not(:disabled) {
+  background-color: #f0f0f0;
+}
+
+#performancePagination button:disabled {
+  background-color: #007bff !important;
+  color: white !important;
+  cursor: default !important;
+  font-weight: bold !important;
+  border-color: #0056b3 !important;
+}
+
+/*모달 css 끝*/

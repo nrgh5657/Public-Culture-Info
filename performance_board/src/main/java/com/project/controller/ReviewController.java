@@ -1,12 +1,16 @@
 package com.project.controller;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,11 +35,12 @@ public class ReviewController {
 	@GetMapping("/reviewList")
 	public String list(Criteria cri, Model model) {
 		log.info("review list..." + cri);
+		log.info("pageNum: " + cri.getPageNum());
 		
 		// 1. 페이징 된 리뷰 목록 가져오기
 		List<ReviewVO> list = service.getList(cri);
 		
-		// 2. 전체 리뷰 수 가져오기ㅎㄷ
+		// 2. 전체 리뷰 수 가져오기
 		int total = service.getTotal(cri);
 		
 		// 3. 모델에 목록 + 페이지 정보 담기
@@ -55,6 +60,15 @@ public class ReviewController {
 //	}
 	
 	
+	/*20250523 리뷰목록 페이지에서 리뷰작성페이지로*/
+	@GetMapping("/reviewRegister")
+	public String showReviewForm(Model model) {
+	    // 필요시 model.addAttribute()로 초기 데이터 전달
+	    return "review/reviewRegister";  // JSP 경로
+	}
+	
+	
+	/*공연 상세페이지에서 값을 넘겨받아 리뷰 작성페이지로*/
 	@PostMapping("/reviewRegister")
 	public String reviewRegister(
 	    @RequestParam("imgKey") String imgKey,
@@ -85,7 +99,6 @@ public class ReviewController {
 	
 	@PostMapping("submitReview")
 	public String submitReview(ReviewVO review, RedirectAttributes rttr) {
-		review.setWriter("testWriter");
 		Date now = new Date();
 		review.setRegDate(now);
 		review.setUpdateDate(now);
@@ -101,30 +114,49 @@ public class ReviewController {
 	public void getReview(@RequestParam Long bno, Criteria cri, Model model) {
 		log.info("get...modify...");
 		
+		service.updateReadCount(bno);
+		
 		model.addAttribute("performance", service.get(bno));
 		model.addAttribute("cri", cri);
 	}
 	
 	@PostMapping("/reviewRemove")
-	public String remove(Long bno, RedirectAttributes rttr) {
+	public String remove(Long bno, Criteria cri, RedirectAttributes rttr) {
 		log.info("remove...");
 		
 		service.remove(bno);
 		
 		rttr.addFlashAttribute("result", "삭제 성공했습니다.");
 		
+		rttr.addAttribute("pageNum", cri.getPageNum());
+	    rttr.addAttribute("amount", cri.getAmount());
+	    rttr.addAttribute("type", cri.getType());
+	    rttr.addAttribute("keyword", cri.getKeyword());
+		
 		return "redirect:/review/reviewList";
 	}
 	
 	@PostMapping("/reviewModify")
-	public String modify(ReviewVO vo, RedirectAttributes rttr) {
+	public String modify(ReviewVO vo, Criteria cri, RedirectAttributes rttr) {
 		log.info("modify...");
 		
 		service.modifiy(vo);
 		
 		rttr.addFlashAttribute("result", "수정 성공했습니다.");
 		
+		rttr.addAttribute("pageNum", cri.getPageNum());
+	    rttr.addAttribute("amount", cri.getAmount());
+	    rttr.addAttribute("type", cri.getType());
+	    rttr.addAttribute("keyword", cri.getKeyword());
+		
 		return "redirect:/review/reviewList";
+	}
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    dateFormat.setLenient(false);
+	    binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 	
 }

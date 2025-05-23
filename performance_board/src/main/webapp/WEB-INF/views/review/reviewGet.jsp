@@ -76,16 +76,17 @@
         <div class="button-wrap">
 	        <div class="button">
 	            <button type="submit" data-oper="modify" class="btn btn-info">Modify</button>
-	            <button type="submit" data-oper="remove" class="btn btn-danger">Remove</button>
 	            <button type="submit" data-oper="list" class="btn btn-default">List</button>
 	        </div>
         </div>
         <!-- end button-wrap -->
         
         <form id="openForm" action="/review/reviewModify" method="get">
-      		<input type="hidden" id="bno" name="bno" value="<c:out value='${performance.bno}'/>">
-      		<input type="hidden" name="pageNum" value="${cri.pageNum}">
-      		<input type="hidden" name="amount" value="${cri.amount}">
+      		<input type="hidden" id="bno" name="bno" value='<c:out value="${performance.bno}" />'>
+       		<input type="hidden" name="pageNum" value= '<c:out value="${cri.pageNum}"/>'>
+            <input type="hidden" name="amount" value='<c:out value="${cri.amount}"/>'>
+            <input type="hidden" name="keyword" value='<c:out value="${cri.keyword}" />'>
+            <input type="hidden" name="type" value="${cri.type}">
       	</form>
 	</div>
 	<!-- end contents -->

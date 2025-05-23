@@ -6,6 +6,8 @@
 <%
     request.setAttribute("tab", "performance");
 %>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <%@ include file="../includes/header.jsp" %>  
 
 <!-- 검색창 -->
@@ -93,7 +95,7 @@
   <div class="page-links">
     <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
       <a class="page-link ${pageMaker.cri.pageNum == num ? 'active' : ''}"
-         href="?pageNum=${num}">
+         href="#" data-page="${num}">
         <c:if test="${pageMaker.cri.pageNum == num}">
           <span class="sr-only">현재페이지 </span>
         </c:if>
@@ -110,5 +112,28 @@
 </div>
 <!-- //페이징 영역-->
 
+<!-- 숨겨진 form 추가 -->
+<form id="actionForm" action="/performance/performanceList" method="get">
+  <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}" />
+  <input type="hidden" name="amount" value="${pageMaker.cri.amount}" />
+  <input type="hidden" name="type" value="${pageMaker.cri.type}" />
+  <input type="hidden" name="keyword" value="${pageMaker.cri.keyword}" />
+</form>
 
 <%@ include file="../includes/footer.jsp" %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    let actionForm = $("#actionForm");
+
+    $(".page-link").on("click", function(e) {
+      e.preventDefault();
+
+      const page = $(this).data("page"); // data-page 값 읽기
+      if (!page) return;
+
+      actionForm.find("input[name='pageNum']").val(page);
+      actionForm.submit(); // form으로 이동
+    });
+  });
+</script>

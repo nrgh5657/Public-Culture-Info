@@ -25,17 +25,6 @@ public class ReviewMapperTests {
 		log.info(mapper.read(1L));
 	}
 	
-	@Test
-	public void testInsertKey() {
-		ReviewVO vo = ReviewVO.builder()
-				.img("no image")
-				.title("Test 공연/행사명2")
-				.writer("Test writer2")
-				.content("Test 내용2")
-				.build();
-		
-		mapper.insertSelectKey(vo);
-	}
 	
 	@Test
 	public void testDelete() {

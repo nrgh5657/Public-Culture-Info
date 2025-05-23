@@ -17,7 +17,7 @@
 
 .search-top-box .krds-form-select {
   height: 40px;
-  width: 85px !important; 
+  width: 100px !important; 
   font-size: 14px;
   padding: 2px 8px;
 }
@@ -56,4 +56,10 @@
 .krds-pagination {
   margin-top: 40px;
   text-align: center;
+}
+
+
+
+#krds-footer {
+  margin-top: 60px;
 }

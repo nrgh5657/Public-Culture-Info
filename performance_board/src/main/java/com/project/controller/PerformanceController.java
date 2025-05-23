@@ -2,7 +2,9 @@ package com.project.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.domain.Criteria;
 import com.project.domain.PageDTO;
@@ -53,6 +56,31 @@ public class PerformanceController {
 	        model.addAttribute("cri", cri);
 	        return "performance/performanceList";
 	    }
+	    
+	    @GetMapping("/performanceListJson")
+	    @ResponseBody
+	    public Map<String, Object> getPerformanceListJson(Criteria cri) {
+
+	        System.out.println(">>>>> /performance/performanceListJson 요청 들어옴");
+
+	        // 1. 페이징 된 목록 불러오기
+	        List<PerformanceVO> list = performanceService.getList(cri);
+	        list.forEach(vo -> vo.setImgKey(performanceService.extractImgKey(vo.getImage())));
+
+	        // 2. 전체 데이터 수
+	        int total = performanceService.getTotal(cri);
+
+	        // 3. JSON 응답용 Map 생성
+	        Map<String, Object> result = new HashMap<>();
+	        result.put("performanceList", list);
+	        result.put("totalCount", total);
+	        result.put("pageNum", cri.getPageNum());
+	        result.put("amount", cri.getAmount());
+
+	        return result;
+	    }
+	    
+	    
 	    
 	/*    @GetMapping("/performanceGet")
 	    public String getPerformanceDetail(String imgKey, Model model) {

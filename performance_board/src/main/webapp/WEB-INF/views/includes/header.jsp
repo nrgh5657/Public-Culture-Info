@@ -45,7 +45,10 @@
 				<div class="header-branding">
 					<h2 class="logo">
 						<a href="#">
-							<span class="sr-only">KRDS - Korea Movie System</span>
+							<span class="sr-only">
+								<img src="https://i.imgur.com/m7imUCG.jpeg" alt="logo" 
+									style="width: 100%; height: 100%;"/>
+							</span>
 						</a>
 					</h2>
 					
