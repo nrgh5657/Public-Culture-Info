@@ -1,10 +1,12 @@
 package com.project.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.project.domain.Criteria;
+import com.project.domain.PerformanceVO;
 import com.project.domain.ReviewVO;
 
 public interface ReviewMapper {
@@ -35,4 +37,5 @@ public interface ReviewMapper {
 	
 	// 총 개수
 	public int getTotalCount(Criteria cri);
+
 }

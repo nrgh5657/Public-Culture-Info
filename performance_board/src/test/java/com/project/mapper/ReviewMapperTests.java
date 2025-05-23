@@ -2,12 +2,18 @@ package com.project.mapper;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.project.domain.Criteria;
+import com.project.domain.PerformanceVO;
 import com.project.domain.ReviewVO;
 
 import lombok.extern.log4j.Log4j;
@@ -49,5 +55,13 @@ public class ReviewMapperTests {
 	public void updateReadCount() {
 		mapper.updateReadCount(24L);
 	}
+	
+	@Test
+	public void testPaggin() {
+		List<ReviewVO> list = 
+				mapper.getListWithPaging(new Criteria(1, 10));
+		list.forEach(review -> log.info(review));
+	}
+	
 
 }
