@@ -121,6 +121,23 @@ body {
     max-width: 800px
 }
 
+.reviewLink {
+    text-align: right;
+    margin-top: 10px;
+    mrgain-bottom:5px;
+}
+.reviewLink a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+.reviewLink a:hover {
+    color: #666;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .performanceDetail-table {
     width: 800px;
     max-width: 100%;    /* 화면이 작으면 최대 100%까지만 줄어듦 */

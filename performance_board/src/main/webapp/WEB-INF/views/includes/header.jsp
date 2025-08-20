@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri ="http://www.springframework.org/security/tags" prefix="sec" %>     
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -44,7 +45,7 @@
 				
 				<div class="header-branding">
 					<h2 class="logo">
-						<a href="#">
+						<a href="${pageContext.request.contextPath}/performance/performanceList">
 							<span class="sr-only">
 								<img src="https://i.imgur.com/m7imUCG.jpeg" alt="logo" 
 									style="width: 100%; height: 100%;"/>
@@ -53,11 +54,24 @@
 					</h2>
 					
 					<div class="header-actions">
-						<a href="#" class="btn-navi login">로그인</a>
-						<button type="button" class="btn-navi join">회원가입</button>
+						<sec:authorize access="isAnonymous()">
+						<a href="/customLogin" class="btn-navi login">로그인</a>
+						<a href="/signUp">
+							<button type="button" class="btn-navi join">회원가입</button>
+						</a>
+						</sec:authorize>
+						
+						<sec:authorize access="isAuthenticated()">
+							<form action="${pageContext.request.contextPath}/logout" method="post">
+	    						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	    						<button type="submit" class="btn-navi login">로그아웃</button>
+							</form>
 						<div class="krds-drop-wrap my-drop">
 							<button type="button" class="btn-navi my drop-btn">나의 GOV</button>
 						</div>
+						</sec:authorize>
+						
+
 					</div>
 				</div>
 			</div>

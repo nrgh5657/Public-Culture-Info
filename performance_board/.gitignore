@@ -21,3 +21,4 @@ Thumbs.db
 
 # performance_board 프로젝트 내부 target 무시
 /performance_board/target/
+/.metadata/
